@@ -1,0 +1,33 @@
+Yu Yin Guan
+CE 150
+Final Project README
+
+My code is split into three part, 3NAT.c, 3EXsend.c, and 3EXrecv.c.
+3NAT is the nat, 3EXsend is the client and 3EXrecv is the server.
+The way my code is constructed is that:
+
+	client creates socket on with port 10000 with nat at 10.0.0.2
+		client - socket created, connect to nat with given addr
+		nat - socketet created with given addr, listen, accept
+
+	nat creates socket on port 10002 with server at 192.168.0.2
+		nat - socket created, connect to nat with given addr
+		server - socketet created with given addr, listen, accept
+
+	server creates socket on port 10001 with server at 192.168.0.1
+		server - socket created, connect to nat with given addr
+		nat - socketet created with given addr, listen, accept
+
+The client/3EXsend is created with a tokenizer that reads in the file
+and catagorize them into 3 arrays. Then I compared the time differences
+between data and deleted the invalded data that is less than 1 second apart.
+The vmn and port number is compared with other data in the array to get 
+ride of vmn with another port number and visa versa. The one int data is 
+sent to the nat with the send function. Nat uses receive and then uses the send
+to send the server of what it just received. Server gets the data with
+the receive function and prints it out into a file and sents a string/acknowledgement.
+Nat takes the ACK with receive function and sends ACK to client upon receiving data.
+The client will sleep for time periods next data time subtract previous data time.
+When creating an array of data, I put -1 on the end of the array. When the 
+-1 is sent, the NAT and Server that recieved it is program to end the while loop and 
+close sockets, thus closing the program. 
